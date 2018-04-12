@@ -1,6 +1,9 @@
 # OS Image thumbnail files
 **/.DS_Store
 
+# IntelliJ
+.idea
+
 # Visual Studio Code specific configurations
 .vscode/*
 !.vscode/tasks.json
