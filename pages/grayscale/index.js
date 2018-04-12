@@ -1,10 +1,10 @@
 window.addEventListener('load', function(){
   var loader = new cvjs.utils.ImageLoader();
-  var image = loader.load('/pages/assets/textures/iu01.jpg', run);
+  var image = loader.load('../assets/textures/iu01.jpg', run);
   var radios = document.querySelectorAll('input[type=radio][name="image"]');
 
   function changeHandler(event) {
-    image = loader.load('/pages/assets/textures/' + this.value, run);
+    image = loader.load('../assets/textures/' + this.value, run);
   }
 
   Array.prototype.forEach.call(radios, function(radio) {
