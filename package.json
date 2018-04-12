@@ -1,0 +1,38 @@
+{
+  "name": "cv.js",
+  "version": "1.0.0",
+  "description": "cv.js",
+  "main": "./build/cv.js",
+  "scripts": {
+    "predev": "tslint --project tsconfig.json src/**/*.ts",
+    "dev": "parcel src/index.ts -d build -o cv.js",
+    "prebuild": "tslint --project tsconfig.json src/**/*.ts",
+    "build": "npm run clean && parcel build src/index.ts -d build -o cv.js",
+    "start": "npm run dev",
+    "pretest": "parcel build test/index.spec.ts -d build/test",
+    "test": "mocha build/test",
+    "clean": "rm -rf build/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/egaoneko/cv.js.git"
+  },
+  "author": "Donghyun Seo <donghyun.seo91@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/egaoneko/cv.js/issues"
+  },
+  "homepage": "https://github.com/egaoneko/cv.js#readme",
+  "devDependencies": {
+    "@types/chai": "^4.1.2",
+    "@types/mocha": "^5.0.0",
+    "@types/node": "^8.9.4",
+    "chai": "^4.1.2",
+    "eslint": "^4.19.1",
+    "mocha": "^5.0.5",
+    "parcel-bundler": "^1.6.2",
+    "tslint": "^5.9.1",
+    "tslint-config-airbnb": "^5.8.0",
+    "typescript": "^2.7.2"
+  }
+}

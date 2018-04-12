@@ -1,0 +1,6 @@
+-t 2000
+-s 75
+-c
+-S
+--recursive
+--check-leaks

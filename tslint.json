@@ -1,0 +1,25 @@
+{
+	"extends": ["tslint:recommended", "tslint-config-airbnb"],
+	"rules": {
+		"no-duplicate-variable": true,
+		"no-string-literal": false,
+		"no-console": [false],
+		"no-unused-variable": [true],
+		"whitespace": [
+			true,
+			"check-operator", "check-separator", "check-type", "check-typecast"
+		],
+		"trailing-comma": [false],
+		"object-literal-sort-keys": false,
+		"interface-name": [true, "never-prefix"],
+		"one-line": [true, "check-open-brace", "check-whitespace"],
+		"semicolon": [true, "always"],
+		"quotemark": [true, "single", "avoid-escape"],
+		"indent": [true, 2],
+		"no-namespace": false,
+		"arrow-parens": [true, "ban-single-arg-parens"],
+		"only-arrow-functions": false,
+		"max-classes-per-file": false,
+		"no-bitwise": false
+	}
+}
