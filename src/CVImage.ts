@@ -64,15 +64,13 @@ class CVImage {
   }
 
   private getPixels(): Uint8ClampedArray {
-    return this.imageData.data;
-    // return this.imageData.data.slice();
+    return this.imageData.data.slice();
   }
 
   private setPixels(pixels: Uint8ClampedArray): void {
-    // var imageData: ImageData = this.ctx.createImageData(this.width, this.height);
-    // imageData.data.set(pixels);
-    // this.ctx.putImageData(imageData, 0, 0);
-    this.ctx.putImageData(this.imageData, 0, 0);
+    var imageData: ImageData = this.ctx.createImageData(this.width, this.height);
+    imageData.data.set(pixels);
+    this.ctx.putImageData(imageData, 0, 0);
 
     const image = new Image();
     image.src = this._canvas.toDataURL();
