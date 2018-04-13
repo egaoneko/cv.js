@@ -1,17 +1,18 @@
 window.addEventListener('load', function(){
   var loader = new cvjs.utils.ImageLoader();
-  var image = loader.load('../assets/textures/iu01.jpg', run);
   var radios = document.querySelectorAll('input[type=radio][name="image"]');
 
+  loader.load('../assets/textures/iu01.jpg').subscribe(run);
+  
   function changeHandler(event) {
-    image = loader.load('../assets/textures/' + this.value, run);
+    loader.load('../assets/textures/' + this.value).subscribe(run);
   }
 
   Array.prototype.forEach.call(radios, function(radio) {
     radio.addEventListener('change', changeHandler);
   });
 
-  function run() {
+  function run(image) {
     var width = 300;
     var height = image.height * (width / image.width);
 

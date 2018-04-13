@@ -6,34 +6,34 @@ import CVImage from '../CVImage';
 import { Pixel } from '../interfaces';
 import { Perf } from '../utils';
 
-export function grayscale(image: HTMLImageElement, flag: GRAYSCALE_TYPE): HTMLCanvasElement {
+export function grayscale(image: HTMLImageElement, type: GRAYSCALE_TYPE): HTMLCanvasElement {
   const cvImage: CVImage = new CVImage(image);
 
-  switch (flag) {
+  switch (type) {
     case GRAYSCALE_TYPE.AVERAGE:
-      Perf.timeStart('GRAYSCALE_TYPE.AVERAGE');
+      Perf.timeStart(`GRAYSCALE: ${type}`);
       cvImage.convolve(convolveByAverage);
-      Perf.timeEnd('GRAYSCALE_TYPE.AVERAGE');
+      Perf.timeEnd(`GRAYSCALE: ${type}`);
       break;
     case GRAYSCALE_TYPE.YUV:
-      Perf.timeStart('GRAYSCALE_TYPE.YUV');
+      Perf.timeStart(`GRAYSCALE: ${type}`);
       cvImage.convolve(convolveByYUV);
-      Perf.timeEnd('GRAYSCALE_TYPE.YUV');
+      Perf.timeEnd(`GRAYSCALE: ${type}`);
       break;
     case GRAYSCALE_TYPE.HSL:
-      Perf.timeStart('GRAYSCALE_TYPE.HSL');
+      Perf.timeStart(`GRAYSCALE: ${type}`);
       cvImage.convolve(convolveByHSL);
-      Perf.timeEnd('GRAYSCALE_TYPE.HSL');
+      Perf.timeEnd(`GRAYSCALE: ${type}`);
       break;
     case GRAYSCALE_TYPE.HSV:
-      Perf.timeStart('GRAYSCALE_TYPE.HSV');
+      Perf.timeStart(`GRAYSCALE: ${type}`);
       cvImage.convolve(convolveByHSV);
-      Perf.timeEnd('GRAYSCALE_TYPE.HSV');
+      Perf.timeEnd(`GRAYSCALE: ${type}`);
       break;
     case GRAYSCALE_TYPE.HSI:
-      Perf.timeStart('GRAYSCALE_TYPE.HSI');
+      Perf.timeStart(`GRAYSCALE: ${type}`);
       cvImage.convolve(convolveByHSI);
-      Perf.timeEnd('GRAYSCALE_TYPE.HSI');
+      Perf.timeEnd(`GRAYSCALE: ${type}`);
       break;
     default:
       break;

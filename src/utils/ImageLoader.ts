@@ -2,6 +2,11 @@ import {
   Cache
 } from '../utils';
 
+import {
+  Observable,
+  Observer,
+} from 'rxjs';
+
 class ImageLoader {
   public crossOrigin: string = 'Anonymous';
 
@@ -11,22 +16,25 @@ class ImageLoader {
   public load(
     url: string,
     onLoad: (image: HTMLImageElement) => void,
-    onError: (image: Event) => void): HTMLImageElement {
+    onError: (image: Event) => void): Observable<HTMLImageElement> {
 
     const src: string = this.path ? this.path + url : url;
+    const observable: Observable<HTMLImageElement> = Observable.create(
+      (observer: Observer<HTMLImageElement>) => {
+        if (this.cache.has(src)) {
+          setTimeout(
+            () => {
+              observer.next(this.cache.get(src));
+              observer.complete();
+            },
+            0);
+          return;
+        }
+        this.loadImage(src, observer);
+      }
+    );
 
-    if (this.cache.has(src)) {
-      setTimeout(
-        () => {
-          if (onLoad) {
-            onLoad(this.cache.get(src));
-          }
-        },
-        0);
-      return this.cache.get(src);
-    }
-
-    return this.loadImage(src, onLoad, onError);
+    return observable;
   }
 
   public setCrossOrigin(value: string): ImageLoader {
@@ -41,20 +49,16 @@ class ImageLoader {
 
   private loadImage(
     src: string,
-    onLoad: (image: HTMLImageElement) => void,
-    onError: (image: Event) => void): HTMLImageElement {
+    observer: Observer<HTMLImageElement>): void {
     const image: HTMLImageElement =
       document.createElementNS('http://www.w3.org/1999/xhtml', 'img') as HTMLImageElement;
-    image.addEventListener('load', () => {
+    Observable.fromEvent(image, 'load').subscribe(() => {
       this.cache.add(src, image);
-      if (onLoad) {
-        onLoad(image);
-      }
+      observer.next(image);
+      observer.complete();
     });
-    image.addEventListener('error', (event: Event) => {
-      if (onError) {
-        onError(event);
-      }
+    Observable.fromEvent(image, 'error').subscribe((event: Event) => {
+      observer.error(event);
     });
     if (src.substr(0, 5) !== 'data:') {
       if (this.crossOrigin !== undefined) {
@@ -62,7 +66,6 @@ class ImageLoader {
       }
     }
     image.src = src;
-    return image;
   }
 }
 
