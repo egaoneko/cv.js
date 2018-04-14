@@ -46,7 +46,7 @@ export function getWeights(kernelSize: number, sigma: number): number[] {
   const origin: number = Math.floor(kernelSize >> 1);
   for (let x = 0; x < kernelSize; x++) {
     for (let y = 0; y < kernelSize; y++) {
-      kernel[x * kernelSize + y] = getWeight(x, y, origin, sigma);
+      kernel[kernelSize * y + x] = getWeight(x, y, origin, sigma);
     }
   }
 
