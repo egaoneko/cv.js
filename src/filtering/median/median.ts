@@ -1,5 +1,8 @@
+import {
+  compPixel,
+  err
+} from '../../common';
 import CVImage from '../../CVImage';
-import { compPixel, err } from '../../common';
 import * as grayscale from '../../grayscale';
 import { Pixel } from '../../interfaces';
 import { Perf } from '../../utils';
@@ -14,10 +17,7 @@ export function median(image: HTMLImageElement, kernelSize: number): HTMLCanvasE
   return cvImage.canvas;
 }
 
-function action(pixel: Pixel, kernel: Pixel[], kernelSize: number): Pixel {  
-  const median: number = Math.floor(kernel.length >> 1);
+function action(pixel: Pixel, kernel: Pixel[], kernelSize: number): Pixel {
   kernel.sort(compPixel);
-  return kernel[median];
+  return kernel[Math.floor(kernel.length >> 1)];
 }
-
-

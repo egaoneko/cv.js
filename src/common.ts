@@ -1,4 +1,4 @@
-import { Pixel } from "./interfaces";
+import { Pixel } from './interfaces';
 
 export function err(msg: string): void {
   throw msg || 'Invalid input';

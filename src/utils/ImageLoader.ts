@@ -16,7 +16,8 @@ class ImageLoader {
   public load(
     url: string,
     onLoad: (image: HTMLImageElement) => void,
-    onError: (image: Event) => void): Observable<HTMLImageElement> {
+    onError: (image: Event) => void
+  ): Observable<HTMLImageElement> {
 
     const src: string = this.path ? this.path + url : url;
     const observable: Observable<HTMLImageElement> = Observable.create(

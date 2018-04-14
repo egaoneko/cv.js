@@ -1,9 +1,13 @@
-import CVImage from '../../CVImage';
 import { err } from '../../common';
+import CVImage from '../../CVImage';
 import { Pixel } from '../../interfaces';
 import { Perf } from '../../utils';
 
-export function gaussian(image: HTMLImageElement, kernelSize: number, sigma: number = 0): HTMLCanvasElement {
+export function gaussian(
+  image: HTMLImageElement,
+  kernelSize: number,
+  sigma: number = 0
+): HTMLCanvasElement {
   const cvImage: CVImage = new CVImage(image);
 
   Perf.timeStart(`GAUSSIAN_FILTERING`);
@@ -15,9 +19,8 @@ export function gaussian(image: HTMLImageElement, kernelSize: number, sigma: num
 
 function action(pixel: Pixel, kernel: Pixel[], kernelSize: number, weights: number[]): Pixel {
   const [r, g, b]: number[] = kernel.reduce(
-    (avgBrightnesses: number[], pixel: Pixel, cIdx: number): number[] => {
-      const { r, g, b } = pixel;
-      const pixelBrightnesses: number[] = [r, g, b];
+    (avgBrightnesses: number[], p: Pixel, cIdx: number): number[] => {
+      const pixelBrightnesses: number[] = [p.r, p.g, p.b];
       return [0, 1, 2].map(
         (idx: number): number => avgBrightnesses[idx] + pixelBrightnesses[idx] * weights[cIdx]
       );
@@ -38,15 +41,13 @@ export function getWeights(kernelSize: number, sigma: number): number[] {
     err('Invalid kernelSize');
   }
 
-  if (sigma === 0) {
-    sigma = getSigma(kernelSize);
-  }
-
+  const s: number = sigma !== 0 ? sigma : getSigma(kernelSize);
   const kernel: number[] = [];
   const origin: number = Math.floor(kernelSize >> 1);
-  for (let x = 0; x < kernelSize; x++) {
-    for (let y = 0; y < kernelSize; y++) {
-      kernel[kernelSize * y + x] = getWeight(x, y, origin, sigma);
+
+  for (let x = 0; x < kernelSize; x += 1) {
+    for (let y = 0; y < kernelSize; y += 1) {
+      kernel[kernelSize * y + x] = getWeight(x, y, origin, s);
     }
   }
 
@@ -58,5 +59,8 @@ function getSigma(kernelSize: number): number {
 }
 
 function getWeight(x: number, y: number, origin: number, sigma: number): number {
-  return Math.exp(-0.5 * (Math.pow((x - origin) / sigma, 2.0) + (Math.pow((y - origin) / sigma, 2.0)))) / (2 * Math.PI * sigma * sigma);
+  return Math.exp(
+    -0.5 * (Math.pow((x - origin) / sigma, 2.0) + (Math.pow((y - origin) / sigma, 2.0))))
+    / (2 * Math.PI * sigma * sigma
+    );
 }

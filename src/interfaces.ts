@@ -7,7 +7,9 @@ export interface Pixel {
 
 export type ConvolveAction = (pixel: Pixel) => Pixel;
 
-export type KernalConvolveAction = (pixel: Pixel,
-                                    kernel: Pixel[],
-                                    kernelSize: number,
-                                    weights?: number[]) => Pixel;
+export type KernalConvolveAction = (
+  pixel: Pixel,
+  kernel: Pixel[],
+  kernelSize: number,
+  weights?: number[]
+) => Pixel;

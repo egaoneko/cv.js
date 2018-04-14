@@ -1,37 +1,37 @@
-import {
-  getContext2D,
-  setCanvasByImage,
-} from './utils/CanvasHelper';
 import { err } from './common';
 import {
   ConvolveAction,
   KernalConvolveAction,
   Pixel,
 } from './interfaces';
+import {
+  getContext2D,
+  setCanvasByImage,
+} from './utils/CanvasHelper';
 
 type Channel = 0 | 1 | 2 | 3;
 
 class CVImage {
 
   public get image(): HTMLImageElement {
-    return this._image;
+    return this.img;
   }
 
   public get canvas(): HTMLCanvasElement {
-    return this._canvas;
+    return this.cvs;
   }
 
-  private _image: HTMLImageElement;
-  private _canvas: HTMLCanvasElement = document.createElement('canvas');
-  private ctx: CanvasRenderingContext2D = getContext2D(this._canvas);
+  private img: HTMLImageElement;
+  private cvs: HTMLCanvasElement = document.createElement('canvas');
+  private ctx: CanvasRenderingContext2D = getContext2D(this.cvs);
   private imageData: ImageData;
 
   private get width(): number {
-    return this._canvas.width;
+    return this.cvs.width;
   }
 
   private get height(): number {
-    return this._canvas.height;
+    return this.cvs.height;
   }
 
   constructor(image: HTMLImageElement) {
@@ -39,8 +39,8 @@ class CVImage {
       err('Invalid image');
     }
 
-    this._image = image;
-    setCanvasByImage(this._canvas, image);
+    this.img = image;
+    setCanvasByImage(this.cvs, image);
     this.imageData = this.ctx.getImageData(0, 0, this.width, this.height);
   }
 
@@ -61,12 +61,14 @@ class CVImage {
     }
 
     this.setPixels(pixels);
-    return this._image;
+    return this.img;
   }
 
-  public kernelConvolve(action: KernalConvolveAction,
-                        kernelSize: number,
-                        weights: number[] = []): HTMLImageElement {
+  public kernelConvolve(
+    action: KernalConvolveAction,
+    kernelSize: number,
+    weights: number[] = []
+  ): HTMLImageElement {
     const pixels: Uint8ClampedArray = this.getPixels();
     const originPixels: Uint8ClampedArray = this.getPixels();
 
@@ -74,8 +76,8 @@ class CVImage {
       err('Invalid kernelSize');
     }
 
-    for (let x: number = 0; x < this.width; x++) {
-      for (let y: number = 0; y < this.height; y++) {
+    for (let x: number = 0; x < this.width; x += 1) {
+      for (let y: number = 0; y < this.height; y += 1) {
         const idx: number = this.getPixelIndex(this.width, x, y, 0);
         const pixel: Pixel = this.getPixelByIndex(pixels, idx);
         const kernel: Pixel[] = this.getKernel(originPixels, kernelSize, x, y);
@@ -93,7 +95,7 @@ class CVImage {
     }
 
     this.setPixels(pixels);
-    return this._image;
+    return this.img;
   }
 
   private getPixels(): Uint8ClampedArray {
@@ -115,8 +117,8 @@ class CVImage {
     this.ctx.putImageData(imageData, 0, 0);
 
     const image = new Image();
-    image.src = this._canvas.toDataURL();
-    this._image = image;
+    image.src = this.cvs.toDataURL();
+    this.img = image;
   }
 
   private getPixelIndex(width: number, x: number, y: number, channel: Channel): number {
@@ -129,10 +131,10 @@ class CVImage {
     const start: number = -offset;
     const end: number = kernelSize - offset;
 
-    for (let i: number = start; i < end; i++) {
-      for (let j: number = start; j < end; j++) {
+    for (let i: number = start; i < end; i += 1) {
+      for (let j: number = start; j < end; j += 1) {
         const cx: number = Math.min(this.width - 1, Math.max(0, x + i));
-        const cy: number = Math.min(this.height - 1, Math.max(0, y + j));;
+        const cy: number = Math.min(this.height - 1, Math.max(0, y + j));
         const idx: number = this.getPixelIndex(this.width, cx, cy, 0);
         kernel.push(this.getPixelByIndex(pixels, idx));
       }

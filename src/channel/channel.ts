@@ -8,9 +8,11 @@ import CVImage from '../CVImage';
 import { Pixel } from '../interfaces';
 import { Perf } from '../utils';
 
-export function channel(image: HTMLImageElement,
-                        type: CHANNEL_TYPE,
-                        presentFlag: CHANNEL_PRESENT_FLAG): HTMLCanvasElement {
+export function channel(
+  image: HTMLImageElement,
+  type: CHANNEL_TYPE,
+  presentFlag: CHANNEL_PRESENT_FLAG
+): HTMLCanvasElement {
   const cvImage: CVImage = new CVImage(image);
   Perf.timeStart(`CHANNEL: ${type}, ${presentFlag}`);
   cvImage.convolve(splitChannel(type, presentFlag));
@@ -18,8 +20,10 @@ export function channel(image: HTMLImageElement,
   return cvImage.canvas;
 }
 
-function splitChannel(type: CHANNEL_TYPE,
-                      presentFlag: CHANNEL_PRESENT_FLAG): (pixel: Pixel) => Pixel {
+function splitChannel(
+  type: CHANNEL_TYPE,
+  presentFlag: CHANNEL_PRESENT_FLAG
+): (pixel: Pixel) => Pixel {
   return (pixel: Pixel): Pixel => {
     const brightness: number = getChannelBrightness(type, pixel);
     const a: number = pixel.a;
