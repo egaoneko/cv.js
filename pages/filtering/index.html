@@ -23,7 +23,7 @@
       <h1>Canvas Filtering</h1>
 
       <div>
-        <input type="radio" id="imageChoice1" name="image" value="iu01.jpg" checked>
+        <input type="radio" id="imageChoice1" name="image" value="iu01.jpg">
         <label for="imageChoice1">iu01</label>
 
         <input type="radio" id="imageChoice2" name="image" value="iu02.jpg">
@@ -37,6 +37,9 @@
 
         <input type="radio" id="imageChoice5" name="image" value="market01.png">
         <label for="imageChoice5">market01</label>
+
+        <input type="radio" id="imageChoice6" name="image" value="noise.png" checked>
+        <label for="imageChoice6">noise</label>
       </div>
 
       <div class="box">
@@ -47,6 +50,16 @@
       <div class="box">
         <h2>Averaging</h2>
         <canvas id="averaging"></canvas>
+      </div>
+
+      <div class="box">
+        <h2>Gaussian</h2>
+        <canvas id="gaussian"></canvas>
+      </div>
+
+      <div class="box">
+        <h2>Median</h2>
+        <canvas id="median"></canvas>
       </div>
 
       <script src="../../build/cv.js"></script>
