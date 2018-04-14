@@ -2,6 +2,7 @@ import { err } from './common';
 import {
   ConvolveAction,
   KernalConvolveAction,
+  MergeConvolveAction,
   Pixel,
 } from './interfaces';
 import {
@@ -14,7 +15,9 @@ type Channel = 0 | 1 | 2 | 3;
 class CVImage {
 
   public get image(): HTMLImageElement {
-    return this.img;
+    const image = new Image();
+    image.src = this.cvs.toDataURL();
+    return image;
   }
 
   public get canvas(): HTMLCanvasElement {
@@ -42,6 +45,10 @@ class CVImage {
     this.img = image;
     setCanvasByImage(this.cvs, image);
     this.imageData = this.ctx.getImageData(0, 0, this.width, this.height);
+  }
+
+  public getPixels(): Uint8ClampedArray {
+    return this.imageData.data.slice();
   }
 
   public convolve(action: ConvolveAction): HTMLImageElement {
@@ -98,11 +105,42 @@ class CVImage {
     return this.img;
   }
 
-  private getPixels(): Uint8ClampedArray {
-    return this.imageData.data.slice();
+  public multiConvolve(
+    other: CVImage,
+    action: MergeConvolveAction,
+    weight1?: number,
+    weight2?: number
+  ): HTMLImageElement {
+    const thisPixels: Uint8ClampedArray = this.getPixels();
+    const otherPixels: Uint8ClampedArray = other.getPixels();
+
+    for (let idx: number = 0; idx < thisPixels.length; idx += 4) {
+      const { r, g, b, a } = action(
+        this.getPixelByIndex(thisPixels, idx),
+        this.getPixelByIndex(otherPixels, idx),
+        weight1,
+        weight2
+      );
+
+      // red
+      thisPixels[idx] = r;
+      // green
+      thisPixels[idx + 1] = g;
+      // blue
+      thisPixels[idx + 2] = b;
+      // alpha
+      thisPixels[idx + 3] = a;
+    }
+
+    this.setPixels(thisPixels);
+    return this.img;
   }
 
   private getPixelByIndex(pixels: Uint8ClampedArray, index: number): Pixel {
+    if (!pixels[index] === undefined) {
+      return null;
+    }
+
     return {
       r: pixels[index],
       g: pixels[index + 1],
@@ -115,10 +153,6 @@ class CVImage {
     const imageData: ImageData = this.ctx.createImageData(this.width, this.height);
     imageData.data.set(pixels);
     this.ctx.putImageData(imageData, 0, 0);
-
-    const image = new Image();
-    image.src = this.cvs.toDataURL();
-    this.img = image;
   }
 
   private getPixelIndex(width: number, x: number, y: number, channel: Channel): number {

@@ -13,3 +13,10 @@ export type KernalConvolveAction = (
   kernelSize: number,
   weights?: number[]
 ) => Pixel;
+
+export type MergeConvolveAction = (
+  pixel1: Pixel,
+  pixel2: Pixel,
+  weight1?: number,
+  weight2?: number
+) => Pixel;
