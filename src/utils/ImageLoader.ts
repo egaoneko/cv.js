@@ -1,6 +1,6 @@
 import {
   Cache
-} from '../utils';
+} from '.';
 
 import {
   Observable,

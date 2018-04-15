@@ -20,7 +20,7 @@
     "noImplicitUseStrict": false,
     "noImplicitAny": true,
     "noLib": false,
-    "lib": ["es5", "es6", "dom"],
+    "lib": ["es5", "es6", "dom", "webworker"],
     "rootDir": "src",
     "outDir": "build",
     "typeRoots" : ["./typings"],

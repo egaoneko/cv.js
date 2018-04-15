@@ -5,13 +5,14 @@
   "main": "./build/cv.js",
   "scripts": {
     "predev": "tslint --project tsconfig.json src/**/*.ts",
-    "dev": "parcel src/index.ts -d build -o cv.js",
+    "dev": "npm run build:worker && parcel src/index.ts -d build -o cv.js",
     "prebuild": "tslint --project tsconfig.json src/**/*.ts",
-    "build": "npm run clean && parcel build src/index.ts -d build -o cv.js",
+    "build": "npm run clean && npm run build:worker && parcel build src/index.ts -d build -o cv.js",
     "start": "npm run dev",
     "pretest": "parcel build test/index.spec.ts -d build/test",
     "test": "mocha build/test",
-    "clean": "rm -rf build/*"
+    "clean": "rm -rf build/*",
+    "build:worker": "parcel build src/worker/worker.ts -d build -o worker.js"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 import {
   GRAYSCALE_TYPE,
-} from './index';
+} from '.';
 
 import CVImage from '../CVImage';
 import { Pixel } from '../interfaces';

@@ -1,7 +1,7 @@
 import {
   CHANNEL_PRESENT_FLAG,
   CHANNEL_TYPE,
-} from './index';
+} from '.';
 
 import { err } from '../common';
 import CVImage from '../CVImage';

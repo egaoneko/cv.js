@@ -1,7 +1,9 @@
-import { Pixel } from './interfaces';
+import {
+  Pixel,
+} from './interfaces';
 
 export function err(msg: string): void {
-  throw msg || 'Invalid input';
+  throw new Error(msg || 'Invalid input');
 }
 
 export function compPixel(a: Pixel, b: Pixel): number {

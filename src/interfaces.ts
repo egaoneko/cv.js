@@ -20,3 +20,7 @@ export type MergeConvolveAction = (
   weight1?: number,
   weight2?: number
 ) => Pixel;
+
+export enum WORKER_TYPE {
+  COMMON = '/build/worker.js'
+}
