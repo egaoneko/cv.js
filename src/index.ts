@@ -4,7 +4,7 @@ import * as grayscale from './grayscale';
 import { WORKER_TYPE } from './interfaces';
 import * as merge from './merge';
 import * as utils from './utils';
-import WorkerLoader from './utils/WorkerLoader';
+import WorkerLoader from './worker/WorkerLoader';
 
 if (WorkerLoader.useWorker) {
   const loader: WorkerLoader = new WorkerLoader(

@@ -11,7 +11,7 @@ class ImageLoader {
   public crossOrigin: string = 'Anonymous';
 
   private path: string;
-  private cache: Cache<HTMLImageElement> = new Cache<HTMLImageElement>();
+  private cache: Cache<HTMLImageElement> = new Cache();
 
   public load(
     url: string,

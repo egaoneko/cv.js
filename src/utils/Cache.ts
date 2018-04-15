@@ -2,9 +2,9 @@
 class Cache<T> {
   public enabled: boolean = true;
 
-  private files: Map<string, T> = new Map<string, T>();
+  private files: Map<string, T> = new Map();
 
-  public add(key: string, file: any): void {
+  public add(key: string, file: T): void {
     if (!this.enabled) return;
     this.files.set(key, file);
   }

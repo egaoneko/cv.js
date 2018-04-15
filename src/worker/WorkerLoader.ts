@@ -1,11 +1,10 @@
-import { Cache } from '.';
-import { err } from '../common';
 import {
-  MESSAGE_TYPE,
   WorkerHelper
-} from '../worker';
+} from '.';
+import { err } from '../common';
+import { Cache } from '../utils';
 
-const cache: Cache<WorkerLoader> = new Cache<WorkerLoader>();
+const cache: Cache<WorkerLoader> = new Cache();
 
 class WorkerLoader {
 
