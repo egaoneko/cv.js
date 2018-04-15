@@ -22,5 +22,5 @@ export type MergeConvolveAction = (
 ) => Pixel;
 
 export enum WORKER_TYPE {
-  COMMON = './build/worker.js'
+  COMMON = '../../build/worker.js'
 }
